@@ -2,7 +2,13 @@
   <div id="app">
     <main>
       <div class="search-box">
-        <input type="text" class="search-bar" placeholder="Search..." />
+        <input
+          type="text"
+          class="search-bar"
+          placeholder="Search..."
+          v-model="query"
+          @keypress="fetchWeather"
+        />
       </div>
 
       <div class="weather-wrap">
@@ -25,7 +31,26 @@ export default {
   name: "App",
   data: () => ({
     api_key: process.env.API_WEATHER_KEY,
+    base_url: "https://api.openweathermap.org/data/2.5",
+    query: "",
+    weather: {},
   }),
+  methods: {
+    fetchWeather(e: any) {
+      if (e.key == "Enter") {
+        fetch(
+          `${this.base_url}/weather?q=${this.query}&units=&APPID=${this.api_key}`
+        ).then((res) => {
+          return res.json();
+        })
+        .then(this.setResults);
+      }
+    },
+
+    setResults(result) {
+      this.weather = result;
+    }
+  },
 };
 </script>
 
