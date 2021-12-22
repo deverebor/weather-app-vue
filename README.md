@@ -1,5 +1,7 @@
 # ⛈ weather-app-vue
 
+> 🚧 A simple weather app built with Vue.js. In progress 🚧
+
 ## Project setup
 
 ```zsh
