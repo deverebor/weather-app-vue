@@ -27,31 +27,39 @@
 </template>
 
 <script lang="ts">
-export default {
+import IApp  from "./interfaces/App";
+import Vue from "vue";
+
+const app = Vue.createApp<IApp>({});
+
+app.component("app", {
   name: "App",
-  data: () => ({
-    api_key: process.env.API_WEATHER_KEY,
-    base_url: "https://api.openweathermap.org/data/2.5",
-    query: "",
-    weather: {},
-  }),
+  data() {
+    return {
+      api_key: process.env.API_WEATHER_KEY,
+      base_url: "https://api.openweathermap.org/data/2.5",
+      query: "",
+      weather: {},
+    };
+  },
   methods: {
-    fetchWeather(e: any) {
+    fetchWeather(e: any): void {
       if (e.key == "Enter") {
         fetch(
           `${this.base_url}/weather?q=${this.query}&units=&APPID=${this.api_key}`
-        ).then((res) => {
-          return res.json();
-        })
-        .then(this.setResults);
+        )
+          .then((res) => {
+            return res.json();
+          })
+          .then(this.setResults);
       }
     },
 
     setResults(result) {
       this.weather = result;
-    }
+    },
   },
-};
+})
 </script>
 
 <style lang="scss" src="./App.scss" />
